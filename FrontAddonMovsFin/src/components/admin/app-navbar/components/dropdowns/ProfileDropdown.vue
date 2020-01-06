@@ -20,6 +20,7 @@
         v-for="option in options"
         :key="option.name"
         :to="{name: option.redirectTo}"
+        onclick="logout"
         class="profile-dropdown__item pt-1 pb-1 mt-2 mb-2"
       >
         {{ $t(`user.${option.name}`) }}
@@ -45,6 +46,14 @@ export default {
           redirectTo: 'login',
         },
       ],
+    },
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/../../login')
+        })
     },
   },
 }

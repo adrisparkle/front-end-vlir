@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AppLayout from '../components/admin/AppLayout'
-import store from '../store/index'
 Vue.use(Router)
 
 const EmptyParentComponent = {
@@ -20,14 +19,13 @@ export default new Router({
     ...demoRoutes,
     {
       path: '*',
-      redirect: { name: 'login' },
+      redirect: { name: 'reportes' },
     },
     {
       name: 'login',
       path: 'login',
       component: () => import('../components/auth/AuthLayout.vue'),
     },
-    /*
     {
       path: '/404',
       component: EmptyParentComponent,
@@ -54,101 +52,11 @@ export default new Router({
         },
       ],
     },
-    */
     {
       name: 'Admin',
       path: '/admin',
       component: AppLayout,
       children: [
-        {
-          name: 'dashboard',
-          path: 'dashboard',
-          component: () => import('../components/dashboard/Dashboard.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'relaciones',
-          path: 'relaciones/:id',
-          component: () => import('../components/dashboard/MasInfo.vue'),
-          /*
-         meta: {
-            requiresAuth: true,
-          }, */
-        },
-        {
-          name: 'oferta',
-          path: 'oferta/:id',
-          component: () => import('../components/dashboard/Oferta.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'pedido',
-          path: 'pedido/:id',
-          component: () => import('../components/dashboard/Pedido.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'mercancia',
-          path: 'mercancia/:id',
-          component: () => import('../components/dashboard/Mercancia.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'factura',
-          path: 'factura/:id',
-          component: () => import('../components/dashboard/Factura.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'pago',
-          path: 'pago/:id',
-          component: () => import('../components/dashboard/Pago.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'solicitud',
-          path: 'solicitud/:id',
-          component: () => import('../components/dashboard/Solicitud.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'asiento',
-          path: 'asiento/:id',
-          component: () => import('../components/dashboard/Asiento.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
         {
           name: 'reportes',
           path: 'reportes',
@@ -163,26 +71,6 @@ export default new Router({
           name: 'mostrarreporte',
           path: 'mostrarreporte/:id',
           component: () => import('../components/dashboard/ReporteShow.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'reportevlir',
-          path: 'reportevlir',
-          component: () => import('../components/dashboard/SelectVLIR.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
-        },
-        {
-          name: 'mostrarvlir',
-          path: 'mostrarvlir/:id',
-          component: () => import('../components/dashboard/ShowVLIR.vue'),
           /*
           meta: {
             requiresAuth: true,
@@ -474,16 +362,3 @@ export default new Router({
     },
   ],
 })
-/*
-Router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return
-    }
-    next('/login')
-  } else {
-    next()
-  }
-})
-*/

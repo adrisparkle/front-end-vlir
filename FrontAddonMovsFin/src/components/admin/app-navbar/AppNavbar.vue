@@ -3,8 +3,8 @@
     <div class="app-navbar__actions row flex-nowrap align--center">
       <profile-dropdown class="va-navbar__item">
         <span>{{userName}}</span>
-        <span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
       </profile-dropdown>
+      <div v-if="isLoggedIn" @click="logout">Logout</div>
     </div>
   </va-navbar>
 </template>
@@ -50,7 +50,7 @@ export default {
     logout: function () {
       this.$store.dispatch('logout')
         .then(() => {
-          this.$router.push('/login')
+          this.$router.push('../../../login')
         })
     },
   },

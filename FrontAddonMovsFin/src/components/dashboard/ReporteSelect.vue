@@ -40,12 +40,14 @@
       </div>
       <div align="center">
         <!-- @click="readItems(selected)" -->
-        <va-button color="success" @click="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
+        <va-button color="success" @click="reporte(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
       </div>
     </form>
     <!-- @click="check(simpleSelectModel.codigo_proyecto)&&launchToast(formData.length,simpleSelectModel.codigo_proyecto)" -->
+    <!--
     <div v-if="formData.length > 0">{{reporte(simpleSelectModel.codigo_proyecto)}}</div>
     <div v-if="(formData.length) === 0">{{launchToast()}}</div>
+    -->
     <div align="center" hidden>
       {{date1 = simpleSelectModel.valido_desde}} <br>
       {{date2 = simpleSelectModel.valido_hasta}} <br>
@@ -112,7 +114,7 @@ export default {
       }, 1000)
     },
     reporte: function (id) {
-      router.push('mostrarreporte/' + id)
+      router.push('../admin/mostrarreporte/' + id)
     },
   },
 }
