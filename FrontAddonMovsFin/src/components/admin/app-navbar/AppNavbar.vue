@@ -2,9 +2,10 @@
   <va-navbar class="app-navbar">
     <div class="app-navbar__actions row flex-nowrap align--center">
       <profile-dropdown class="va-navbar__item">
-        <span>{{userName}}</span>
+        <span>{{user}}</span>
       </profile-dropdown>
-      <div v-if="isLoggedIn" @click="logout">Logout</div>
+      <!-- <font color="#ff8c00">{{user}}</font> -->
+      <div v-if="isLoggedIn" @click="logout"><font color="#ff8c00"> | logout</font></div>
     </div>
   </va-navbar>
 </template>
@@ -30,7 +31,7 @@ export default {
   },
   data () {
     return {
-      userName: 'A.CENTELLAS.Y@UCB.BO',
+      userName: 'USUARIO',
     }
   },
   computed: {
@@ -44,6 +45,9 @@ export default {
     },
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn
+    },
+    user: function () {
+      return this.$store.getters.user
     },
   },
   methods: {

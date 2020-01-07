@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AppLayout from '../components/admin/AppLayout'
-/* import store from '../store/index' */
+import store from '../store'
 Vue.use(Router)
 
 const EmptyParentComponent = {
@@ -13,7 +13,19 @@ if (process.env.NODE_ENV === 'development' || process.env.VUE_APP_INCLUDE_DEMOS)
   const vueBookRoutes = require('./vueBookRoutes').default
   vueBookRoutes.forEach(route => demoRoutes.push(route))
 }
-
+/*
+Router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
+})
+*/
 export default new Router({
   mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
   routes: [
