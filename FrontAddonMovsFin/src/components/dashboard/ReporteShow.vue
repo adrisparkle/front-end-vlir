@@ -92,6 +92,7 @@ export default {
       fullPage: true,
       page: 1,
       items: [],
+      totalPages: 0,
       loading: false,
       perPage: '6',
       formData: {

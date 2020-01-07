@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AppLayout from '../components/admin/AppLayout'
+/* import store from '../store/index' */
 Vue.use(Router)
 
 const EmptyParentComponent = {
@@ -77,6 +78,7 @@ export default new Router({
           },
           */
         },
+        /*
         {
           name: 'forms',
           path: 'forms',
@@ -358,7 +360,21 @@ export default new Router({
             },
           ],
         },
+        */
       ],
     },
   ],
 })
+/*
+Router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
+})
+*/
