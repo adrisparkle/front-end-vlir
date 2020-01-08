@@ -31,7 +31,7 @@ export default new Vuex.Store({
     auth_request (state) {
       state.status = 'loading'
     },
-    auth_success (state, token, usernameid) {
+    auth_success (state, { token, usernameid }) {
       state.status = 'success'
       state.token = token
       state.usernameid = usernameid
@@ -62,10 +62,13 @@ export default new Vuex.Store({
             const usernameid = resp.data.Id
             const name = resp.data.name
             localStorage.setItem('token', token)
+            console.log(token)
             localStorage.setItem('usernameid', usernameid)
+            console.log(usernameid)
             localStorage.setItem('name', name)
+            console.log(name)
             axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, usernameid)
+            commit('auth_success', { token, usernameid })
             resolve(resp)
           })
           .catch(err => {
@@ -79,9 +82,16 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('logout')
         localStorage.removeItem('token')
+        localStorage.removeItem('usernameid')
+        localStorage.removeItem('name')
         delete axios.defaults.headers.common['Authorization']
-        axios.get('/auth/Logout/')
+        /* axios.get('/auth/Logout/') */
+        console.log('el token amiga' + localStorage.getItem('token'))
         resolve()
+          .catch(err => {
+            reject(err)
+            console.log(err)
+          })
       })
     },
   },
@@ -89,5 +99,6 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
     user: state => state.name,
+    tokencito: state => state.token,
   },
 })

@@ -15,21 +15,16 @@
         :name="`fa ${isShown ? 'fa-angle-up' :'fa-angle-down'}`"
       />
     </span>
-    <div class="profile-dropdown__content pl-4 pr-4 pt-2 pb-2">
-      <router-link
-        v-for="option in options"
-        :key="option.name"
-        :to="{name: option.redirectTo}"
-        onclick="logout"
-        class="profile-dropdown__item pt-1 pb-1 mt-2 mb-2"
-      >
-        {{ $t(`user.${option.name}`) }}
-      </router-link>
+    <div class="profile-dropdown__content pl-2 pr-2 pt-2 pb-2" width="200px">
+      <va-button flat color="danger" @click="logoutout">
+        {{ $t('Cerrar sesión') }}
+      </va-button>
     </div>
   </va-dropdown>
 </template>
 
 <script>
+import router from '../../../../../router/index'
 export default {
   name: 'profile-section',
   data () {
@@ -43,16 +38,17 @@ export default {
       default: () => [
         {
           name: 'logout',
-          redirectTo: 'login',
+          redirectTo: '/login',
         },
       ],
     },
   },
   methods: {
-    logout: function () {
+    logoutout: function () {
+      console.log('por lo menos si entra')
       this.$store.dispatch('logout')
         .then(() => {
-          this.$router.push('/../../login')
+          router.push('/')
         })
     },
   },

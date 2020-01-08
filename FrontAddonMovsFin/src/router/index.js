@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AppLayout from '../components/admin/AppLayout'
 import store from '../store'
+/* import { isLoggedIn } from '../store/getters' */
 Vue.use(Router)
 
 const EmptyParentComponent = {
@@ -13,26 +14,14 @@ if (process.env.NODE_ENV === 'development' || process.env.VUE_APP_INCLUDE_DEMOS)
   const vueBookRoutes = require('./vueBookRoutes').default
   vueBookRoutes.forEach(route => demoRoutes.push(route))
 }
-/*
-Router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return
-    }
-    next('/login')
-  } else {
-    next()
-  }
-})
-*/
-export default new Router({
+
+const router = new Router({
   mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
   routes: [
     ...demoRoutes,
     {
       path: '*',
-      redirect: { name: 'reportes' },
+      redirect: { name: 'login' },
     },
     {
       name: 'login',
@@ -74,21 +63,14 @@ export default new Router({
           name: 'reportes',
           path: 'reportes',
           component: () => import('../components/dashboard/ReporteSelect.vue'),
-          /*
           meta: {
             requiresAuth: true,
           },
-          */
         },
         {
           name: 'mostrarreporte',
           path: 'mostrarreporte/:id',
           component: () => import('../components/dashboard/ReporteShow.vue'),
-          /*
-          meta: {
-            requiresAuth: true,
-          },
-          */
         },
         /*
         {
@@ -377,16 +359,15 @@ export default new Router({
     },
   ],
 })
-/*
-Router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters.isLoggedIn) {
       next()
       return
     }
-    next('/login')
+    next('login')
   } else {
     next()
   }
 })
-*/
+export default router

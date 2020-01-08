@@ -59,7 +59,7 @@
 
 <script>
 import axios from 'axios'
-import router from '../../router/index'
+import Router from '../../router/index'
 import Loading from 'vue-loading-overlay'
 export default {
   components: { Loading },
@@ -118,7 +118,7 @@ export default {
       )
     },
     reporte: function (id) {
-      router.push('../admin/mostrarreporte/' + id)
+      Router.push('/admin/mostrarreporte/' + id)
     },
   },
 }

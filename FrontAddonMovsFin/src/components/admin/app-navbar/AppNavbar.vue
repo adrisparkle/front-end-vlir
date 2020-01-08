@@ -5,7 +5,7 @@
         <span>{{user}}</span>
       </profile-dropdown>
       <!-- <font color="#ff8c00">{{user}}</font> -->
-      <div v-if="isLoggedIn" @click="logout"><font color="#ff8c00"> | logout</font></div>
+      <!-- <div v-if="isLoggedIn" @click="logout"><font color="#ff8c00"> | logout</font></div> -->
     </div>
   </va-navbar>
 </template>
@@ -54,7 +54,7 @@ export default {
     logout: function () {
       this.$store.dispatch('logout')
         .then(() => {
-          this.$router.push('../../../login')
+          this.$router.push('login')
         })
     },
   },
