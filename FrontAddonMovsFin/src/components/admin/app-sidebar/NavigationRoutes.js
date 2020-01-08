@@ -21,7 +21,6 @@ export const navigationRoutes = {
         iconClass: 'vuestic-iconset-statistics',
       },
     },
-    /*
     {
       name: 'reportevlir',
       displayName: 'Reporte VLIR',
@@ -216,6 +215,5 @@ export const navigationRoutes = {
         },
       ],
     },
-*/
   ],
 }

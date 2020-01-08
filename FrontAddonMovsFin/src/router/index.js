@@ -71,8 +71,26 @@ const router = new Router({
           name: 'mostrarreporte',
           path: 'mostrarreporte/:id',
           component: () => import('../components/dashboard/ReporteShow.vue'),
+          meta: {
+            requiresAuth: true,
+          },
         },
-        /*
+        {
+          name: 'reportevlir',
+          path: 'reportevlir',
+          component: () => import('../components/dashboard/SelectVLIR.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          name: 'mostrarVLIR',
+          path: 'mostrarVLIR/:id',
+          component: () => import('../components/dashboard/ShowVLIR.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
         {
           name: 'forms',
           path: 'forms',
@@ -354,7 +372,6 @@ const router = new Router({
             },
           ],
         },
-        */
       ],
     },
   ],

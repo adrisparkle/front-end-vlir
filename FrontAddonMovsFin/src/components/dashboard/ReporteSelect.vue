@@ -40,7 +40,7 @@
       </div>
       <div align="center">
         <!-- @click="readItems(selected)" -->
-        <va-button color="success" @click.prevent="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
+        <va-button color="success" @click="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
       </div>
     </form>
     <!-- @click="check(simpleSelectModel.codigo_proyecto)&&launchToast(formData.length,simpleSelectModel.codigo_proyecto)" -->
@@ -81,6 +81,7 @@ export default {
       formData: 1000,
       color: 'danger',
       codigo_proyecto: '',
+      isLoading: false,
     }
   },
   created () {
@@ -96,6 +97,7 @@ export default {
         }).catch()
     },
     check: function (id) {
+      this.isLoading = true
       axios.get('/ProjectInfo/' + id)
         .then(response => {
           this.formData = response.data
@@ -106,6 +108,9 @@ export default {
             this.reporte(id)
           }
         })
+      setTimeout(() => {
+        this.isLoading = false
+      }, 10000)
     },
     launchToast () {
       this.showToast(

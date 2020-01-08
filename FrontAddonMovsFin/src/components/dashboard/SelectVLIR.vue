@@ -39,10 +39,10 @@
         </div>
         <div align="center">
           <!-- @click="readItems(selected)" -->
-          <va-button color="success" @click="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
+          <va-button color="success" @click.prevent="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
         </div>
       </form>
-      <div v-if="formData.length > 0">{{reporte(simpleSelectModel.codigo_proyecto)}}</div>
+      <div v-if="formData.length > 0">{{check(simpleSelectModel.codigo_proyecto)}}</div>
       <div v-if="(formData.length) === 0">{{launchToast()}}</div>
       <div align="center" hidden>
         jkah{{date1 = simpleSelectModel.valido_desde}} <br>
@@ -72,6 +72,8 @@ export default {
       perPage: '5',
       perPageOptions: ['5', '10', '15', '20'],
       formData: -1,
+      codigo_proyecto: '',
+      isLoading: false,
     }
   },
   created () {
@@ -87,13 +89,23 @@ export default {
         }).catch()
     },
     reporte: function (id) {
-      router.push('mostrarvlir/' + id)
+      router.push('/admin/mostrarvlir/' + id)
     },
     check: function (id) {
+      this.isLoading = true
       axios.get('/ProjectVLIRInfo/' + id)
         .then(response => {
           this.formData = response.data
-        }).catch()
+          console.log(response.data)
+          if (response.data.length === 0) {
+            this.launchToast()
+          } else {
+            this.reporte(id)
+          }
+        })
+      setTimeout(() => {
+        this.isLoading = false
+      }, 10000)
     },
     launchToast () {
       this.showToast(

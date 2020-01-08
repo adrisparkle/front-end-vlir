@@ -1,5 +1,7 @@
 <template>
 <div class="auth-layout row align-content--center">
+  <loading :active.sync="isLoading"
+           :is-full-page="true"></loading>
   <div class="flex xs12 pa-3">
     <div class="d-flex justify--center">
       <va-card class="auth-layout__card">
@@ -41,14 +43,16 @@
 
 <script>
 import VaIconVuestic from 'vuestic-ui/src/components/vuestic-components/va-icon/va-iconset/VaIconVuestic'
+import Loading from 'vue-loading-overlay'
 const tabs = [
   'login',
 ]
 export default {
   name: 'AuthLayout',
-  components: { VaIconVuestic },
+  components: { VaIconVuestic, Loading },
   data () {
     return {
+      isLoading: false,
       selectedTabIndex: 0,
       tabTitles: ['login', 'createNewAccount'],
       email: '',
@@ -67,11 +71,15 @@ export default {
   },
   methods: {
     login: function () {
+      this.isLoading = true
       let email = this.email
       let password = this.password
       this.$store.dispatch('login', { email, password })
         .then(() => this.$router.push('../admin/reportes/'))
         .catch(err => console.log(err))
+      setTimeout(() => {
+        this.isLoading = false
+      }, 10000)
     },
   },
 }
