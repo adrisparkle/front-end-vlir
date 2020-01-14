@@ -40,7 +40,7 @@
       </div>
       <div align="center">
         <!-- @click="readItems(selected)" -->
-        <va-button color="success" @click="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
+        <va-button color="success" @click.prevent="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
       </div>
     </form>
     <!-- @click="check(simpleSelectModel.codigo_proyecto)&&launchToast(formData.length,simpleSelectModel.codigo_proyecto)" -->
@@ -90,7 +90,7 @@ export default {
   methods: {
     init: function () {
       this.isLoading = true
-      axios.get('/ProjectGeneral/')
+      axios.get('/ProjectGeneral/' + this.userid)
         .then(response => {
           this.simpleOptions = response.data
           this.isLoading = false
@@ -124,6 +124,11 @@ export default {
     },
     reporte: function (id) {
       Router.push('/admin/mostrarreporte/' + id)
+    },
+  },
+  computed: {
+    userid: function () {
+      return this.$store.getters.userid
     },
   },
 }

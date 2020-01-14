@@ -100,5 +100,6 @@ export default new Vuex.Store({
     authStatus: state => state.status,
     user: state => state.name,
     tokencito: state => state.token,
+    userid: state => state.usernameid,
   },
 })

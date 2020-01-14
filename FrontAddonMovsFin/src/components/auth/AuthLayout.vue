@@ -6,7 +6,7 @@
     <div class="d-flex justify--center">
       <va-card class="auth-layout__card">
         <div class="flex xs12 pa-3 flex-center">
-          <img src="colores-horizontal-LP.jpg" width="200" >
+          <img src="colores-horizontal-LP.jpg" width="200">
         </div>
         <va-tabs
           v-model="tabIndex"

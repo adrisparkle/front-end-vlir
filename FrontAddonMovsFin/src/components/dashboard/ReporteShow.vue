@@ -15,13 +15,32 @@
               :sheetname="'hoja1'"
               :fields="fields"
               class="boton_personalizado"
-            >{{ $t('Descargar Excel') }}</vue-excel-xlsx>
+            >{{ $t('Descargar Excel') }}
+              </vue-excel-xlsx>
         </div>
         <div class="flex xs12 lg12">
           <va-card>
-            <va-list-label>
-              {{ $t('Reporte') }}
-            </va-list-label>
+            <div align="left"  v-for="data of formData" :key="'item' + data.id">
+              <div class="mb-4" style="padding-left: 25px">
+                <p class="display-2">Reporte de presupuesto</p><br>
+                <table>
+                  <tr>
+                  <td><p class="display-5">{{'Nombre del proyecto: ' + data.proyecto_nombre}}</p></td>
+                  <td style="padding-left: 100px"><p class="display-5">{{'Código del proyecto: ' + data.PROYECTO_CODIGO}}</p></td>
+                  </tr>
+                  <br>
+                  <tr>
+                    <td><p class="display-5">{{'Valido desde: ' + data.valido_desde}}</p></td>
+                    <td style="padding-left: 100px"><p class="display-5">{{'Valido hasta: ' + data.valido_hasta}}</p></td>
+                  </tr>
+                  <br>
+                  <tr>
+                    <td><p class="display-5">{{'Unidad organizacional: ' + data.unidad_organizacional}}</p></td>
+                    <td style="padding-left: 100px"><p class="display-5">{{'PEI/PO: ' + data.pei_po}}</p></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
             <va-data-table
               :fields="fields"
               :data="items"
@@ -48,40 +67,44 @@ export default {
   computed: {
     fields () {
       return [{
-        name: 'PROYECTO_CODIGO',
-        title: this.$t('Código del proyecto'),
+        name: 'formatcode',
+        title: this.$t('Cuenta'),
         width: '10%',
       }, {
-        name: 'proyecto_nombre',
-        title: this.$t('Nombre del proyecto'),
+        name: 'acctname',
+        title: this.$t('nombre de cuenta'),
         width: '30%',
       }, {
-        name: 'cuenta',
-        title: this.$t('cuenta'),
-        width: '20%',
-      }, {
-        name: 'codigo_cuenta',
+        name: 'acctcode',
         title: this.$t('código de cuenta'),
         width: '20%',
       }, {
-        name: 'nombre_cuenta',
-        title: this.$t('nombre de la cuenta'),
-        width: '20%',
-      }, {
-        name: 'unidad_organizacional',
+        name: 'dim1',
         title: this.$t('unidad organizacional'),
         width: '20%',
       }, {
-        name: 'pei_po',
+        name: 'dim2',
         title: this.$t('pei/po'),
         width: '20%',
       }, {
-        name: 'total_cuenta',
-        title: this.$t('total de la cuenta'),
+        name: 'total_dim',
+        title: this.$t('Monto presupuestado'),
         width: '20%',
       }, {
         name: 'ejecutado',
-        title: this.$t('presupuesto ejecutado'),
+        title: this.$t('ejecutado'),
+        width: '20%',
+      }, {
+        name: 'solicitado',
+        title: this.$t('solicitado'),
+        width: '20%',
+      }, {
+        name: 'comprometido',
+        title: this.$t('comprometido'),
+        width: '20%',
+      }, {
+        name: 'total_cuenta',
+        title: this.$t('saldo de cuenta'),
         width: '20%',
       }]
     },
@@ -95,49 +118,51 @@ export default {
       totalPages: 0,
       loading: false,
       perPage: '6',
-      formData: {
-        id: null,
-      },
+      formData: [],
       toastText: '¡No se encuentran movimientos para este proyecto!',
       toastDuration: 2500,
       toastPosition: 'top-center',
       isToastFullWidth: true,
       columns: [
         {
-          label: 'Codigo del proyecto',
-          field: 'PROYECTO_CODIGO',
-        },
-        {
-          label: 'Nombre del proyecto',
-          field: 'proyecto_nombre',
-        },
-        {
           label: 'Cuenta',
-          field: 'cuenta',
+          field: 'formatcode',
         },
         {
-          label: 'Código de cuenta',
-          field: 'codigo_cuenta',
+          label: 'NOMBRE DE CUENTA',
+          field: 'acctname',
         },
         {
-          label: 'Nombre de la cuenta',
-          field: 'nombre_cuenta',
+          label: 'CODIGO DE CUENTA SAP',
+          field: 'acctcode',
         },
         {
-          label: 'Unidad Organizacional',
-          field: 'unidad_organizacional',
+          label: 'UNIDAD ORGANIZACIONAL',
+          field: 'dim1',
         },
         {
           label: 'PEI/PO',
-          field: 'pei_po',
+          field: 'dim2',
         },
         {
-          label: 'Total de la cuenta',
-          field: 'total_cuenta',
+          label: 'MONTO DE PRESUPUESTO',
+          field: 'total_dim',
         },
         {
-          label: 'Presupuesto ejecutado',
+          label: 'MONTO EJECUTADO',
           field: 'ejecutado',
+        },
+        {
+          label: 'MONTO SOLICITADO',
+          field: 'solicitado',
+        },
+        {
+          label: 'MONTO COMPROMETIDO',
+          field: 'comprometido',
+        },
+        {
+          label: 'SALDO DE CUENTA',
+          field: 'total_cuenta',
         },
       ],
     }
@@ -155,9 +180,22 @@ export default {
         this.isLoading = false
       }, 2000)
     },
+    init: function () {
+      this.isLoading = true
+      this.formData = this.$route.params
+      axios.get('/ProjectName/' + this.formData.id)
+        .then(response => {
+          this.formData = response.data
+        })
+        .catch()
+      setTimeout(() => {
+        this.isLoading = false
+      }, 2000)
+    },
   },
   created () {
     this.readItems()
+    this.init()
   },
 }
 </script>
