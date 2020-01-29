@@ -58,7 +58,6 @@
           </va-accordion>
         </va-card>
       </div>
-
       <div class="flex xs12">
         <va-card :title="$t('collapse.collapseWithCustomHeader')">
           <va-accordion>

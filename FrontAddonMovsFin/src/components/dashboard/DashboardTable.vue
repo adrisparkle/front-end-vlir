@@ -107,7 +107,6 @@ export default {
     }, 400),
     readItems (page = 0) {
       this.loading = true
-
       axios.get('/PurchaseSearch/')
         .then(response => {
           this.items = response.data

@@ -8,15 +8,15 @@
           <va-button color="info" :to="{ name: 'reportes' }">
             {{ $t('Volver al Inicio') }}
           </va-button>
-              <vue-excel-xlsx
-              :data="items"
-              :columns="columns"
-              :filename="'PresupProyecto'"
-              :sheetname="'hoja1'"
-              :fields="fields"
-              class="boton_personalizado"
-            >{{ $t('Descargar Excel') }}
-              </vue-excel-xlsx>
+          <vue-excel-xlsx
+            :data="items"
+            :columns="columns"
+            :filename="'PresupProyecto'"
+            :sheetname="'hoja1'"
+            :fields="fields"
+            class="boton_personalizado"
+          >{{ $t('Descargar Excel') }}
+          </vue-excel-xlsx>
         </div>
         <div class="flex xs12 lg12">
           <va-card>
@@ -25,8 +25,8 @@
                 <p class="display-2">Reporte de presupuesto</p><br>
                 <table>
                   <tr>
-                  <td><p class="display-5" style="padding-right: 50px">{{'Nombre del proyecto: ' + data.proyecto_nombre}}</p></td>
-                  <td><p class="display-5" style="padding-left: 50px">{{'Código del proyecto: ' + data.PROYECTO_CODIGO}}</p></td>
+                    <td><p class="display-5" style="padding-right: 50px">{{'Nombre del proyecto: ' + data.proyecto_nombre}}</p></td>
+                    <td><p class="display-5" style="padding-left: 50px">{{'Código del proyecto: ' + data.PROYECTO_CODIGO}}</p></td>
                   </tr>
                   <br>
                   <tr>
@@ -87,44 +87,40 @@ export default {
       isToastFullWidth: true,
       columns: [
         {
+          label: 'FECHA',
+          field: 'fecha',
+        },
+        {
+          label: '# TRANSACCIÓN',
+          field: 'trans_id',
+        },
+        {
+          label: '# LINEA',
+          field: 'line_id',
+        },
+        {
+          label: 'GLOSA',
+          field: 'memo',
+        },
+        {
+          label: 'DEBE',
+          field: 'Debit',
+        },
+        {
+          label: 'HABER',
+          field: 'Credit',
+        },
+        {
+          label: 'TOTAL',
+          field: 'total',
+        },
+        {
           label: 'CUENTA',
-          field: 'formatcode',
-        },
-        {
-          label: 'NOMBRE DE CUENTA',
-          field: 'acctname',
-        },
-        {
-          label: 'CODIGO DE CUENTA',
-          field: 'acctcode',
+          field: 'cuenta',
         },
         {
           label: 'UNIDAD ORGANIZACIONAL',
-          field: 'dim1',
-        },
-        {
-          label: 'PEI/PO',
-          field: 'dim2',
-        },
-        {
-          label: 'MONTO PRESUPUESTADO',
-          field: 'total_dim',
-        },
-        {
-          label: 'MONTO EJECUTADO',
-          field: 'ejecutado',
-        },
-        {
-          label: 'MONTO SOLICITADO',
-          field: 'solicitado',
-        },
-        {
-          label: 'MONTO COMPROMETIDO',
-          field: 'comprometido',
-        },
-        {
-          label: 'SALDO',
-          field: 'total_cuenta',
+          field: 'unidad_organizacional',
         },
       ],
     }
@@ -132,48 +128,40 @@ export default {
   computed: {
     fields () {
       return [{
-        name: 'formatcode',
+        name: 'fecha',
+        title: this.$t('FECHA'),
+        width: '10%',
+      }, {
+        name: 'trans_id',
+        title: this.$t('# TRANSACCION'),
+        width: '10%',
+      }, {
+        name: 'line_id',
+        title: this.$t('# LINEA'),
+        width: '10%',
+      }, {
+        name: 'memo',
+        title: this.$t('GLOSA'),
+        width: '45%',
+      }, {
+        name: 'Debit',
+        title: this.$t('DEBE'),
+        width: '10%',
+      }, {
+        name: 'Credit',
+        title: this.$t('HABER'),
+        width: '10%',
+      }, {
+        name: 'total',
+        title: this.$t('TOTAL'),
+        width: '10%',
+      }, {
+        name: 'cuenta',
         title: this.$t('CUENTA'),
         width: '10%',
       }, {
-        name: 'acctname',
-        title: this.$t('NOMBRE CUENTA'),
-        width: '35%',
-      }, {
-        name: 'acctcode',
-        title: this.$t('CODIGO CUENTA'),
-        width: '20%',
-      }, {
-        name: 'dim1',
-        title: this.$t('UNIDAD ORG.'),
-        width: '5%',
-      }, {
-        name: 'dim2',
-        title: this.$t('PEI/PO'),
-        width: '10%',
-      }, {
-        name: 'total_dim',
-        title: this.$t('MONTO PRESUP'),
-        width: '10%',
-      }, {
-        name: 'ejecutado',
-        title: this.$t('MONTO EJEC'),
-        width: '10%',
-      }, {
-        name: 'solicitado',
-        title: this.$t('MONTO SOLIC'),
-        width: '10%',
-      }, {
-        name: 'comprometido',
-        title: this.$t('MONTO COMP'),
-        width: '10%',
-      }, {
-        name: 'total_cuenta',
-        title: this.$t('SALDO'),
-        width: '10%',
-      }, {
-        name: '__slot:actions',
-        title: this.$t('tables.headings.acciones'),
+        name: 'unidad_organizacional',
+        title: this.$t('UNIDAD ORGANIZACIONAL'),
         width: '10%',
       }]
     },
@@ -182,7 +170,7 @@ export default {
     readItems: function () {
       this.isLoading = true
       this.items = this.$route.params
-      axios.get('/ProjectInfo/' + this.items.id)
+      axios.get('/ProjectJournal/' + this.items.id)
         .then(response => {
           this.items = response.data
         })

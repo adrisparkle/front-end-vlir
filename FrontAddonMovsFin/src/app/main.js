@@ -28,7 +28,7 @@ Vue.use(ColorThemePlugin,
   {
     // Add or change theme colors here
     themes: {
-      primary: '#e18a10',
+    //  primary: this.$themes.primary,
       // blurple: '#7289DA',
     },
   })
