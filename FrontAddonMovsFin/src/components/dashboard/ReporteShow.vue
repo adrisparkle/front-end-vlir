@@ -75,7 +75,7 @@ export default {
       isLoading: false,
       fullPage: true,
       page: 1,
-      perPage: '5',
+      perPage: '10',
       perPageOptions: ['5', '10', '15', '20'],
       items: [],
       totalPages: 0,
@@ -87,44 +87,56 @@ export default {
       isToastFullWidth: true,
       columns: [
         {
-          label: 'CUENTA',
-          field: 'formatcode',
+          label: 'FORMATCODE',
+          field: 'FORMATCODE',
         },
         {
-          label: 'NOMBRE DE CUENTA',
-          field: 'acctname',
+          label: 'ACCTCODE',
+          field: 'ACCTCODE',
         },
         {
-          label: 'CODIGO DE CUENTA',
-          field: 'acctcode',
+          label: 'ACCTNAME',
+          field: 'ACCTNAME',
         },
         {
-          label: 'UNIDAD ORGANIZACIONAL',
-          field: 'dim1',
+          label: 'DIM1',
+          field: 'DIM1',
         },
         {
-          label: 'PEI/PO',
-          field: 'dim2',
+          label: 'DIM2',
+          field: 'DIM2',
         },
         {
-          label: 'MONTO PRESUPUESTADO',
-          field: 'total_dim',
+          label: 'TOTAL_CUENTA',
+          field: 'TOTAL_CUENTA',
         },
         {
-          label: 'MONTO EJECUTADO',
-          field: 'ejecutado',
+          label: 'TOTAL_DIM',
+          field: 'TOTAL_DIM',
         },
         {
-          label: 'MONTO SOLICITADO',
-          field: 'solicitado',
+          label: 'SOLICITADO',
+          field: 'SOLICITADO',
         },
         {
-          label: 'MONTO COMPROMETIDO',
-          field: 'comprometido',
+          label: 'COMPROMETIDO',
+          field: 'COMPROMETIDO',
         },
         {
-          label: 'SALDO',
-          field: 'total_cuenta',
+          label: 'EJECUTADO',
+          field: 'EJECUTADO',
+        },
+        {
+          label: 'SUCURSAL',
+          field: 'SUCURSAL',
+        },
+        {
+          label: 'PrjCode',
+          field: 'PrjCode',
+        },
+        {
+          label: 'PrjName',
+          field: 'PrjName',
         },
       ],
     }
@@ -132,44 +144,40 @@ export default {
   computed: {
     fields () {
       return [{
-        name: 'formatcode',
-        title: this.$t('CUENTA'),
+        name: 'FORMATCODE',
+        title: this.$t('FORMATCODE'),
         width: '10%',
       }, {
-        name: 'acctname',
-        title: this.$t('NOMBRE CUENTA'),
+        name: 'ACCTCODE',
+        title: this.$t('ACCTCODE'),
+        width: '10%',
+      }, {
+        name: 'ACCTNAME',
+        title: this.$t('ACCTNAME'),
         width: '35%',
       }, {
-        name: 'acctcode',
-        title: this.$t('CODIGO CUENTA'),
-        width: '20%',
-      }, {
-        name: 'dim1',
-        title: this.$t('UNIDAD ORG.'),
-        width: '5%',
-      }, {
-        name: 'dim2',
-        title: this.$t('PEI/PO'),
+        name: 'TOTAL_CUENTA',
+        title: this.$t('TOTAL_CUENTA'),
         width: '10%',
       }, {
-        name: 'total_dim',
-        title: this.$t('MONTO PRESUP'),
+        name: 'TOTAL_DIM',
+        title: this.$t('TOTAL_DIM'),
         width: '10%',
       }, {
-        name: 'ejecutado',
-        title: this.$t('MONTO EJEC'),
+        name: 'SOLICITADO',
+        title: this.$t('SOLICITADO'),
         width: '10%',
       }, {
-        name: 'solicitado',
-        title: this.$t('MONTO SOLIC'),
+        name: 'COMPROMETIDO',
+        title: this.$t('COMPROMETIDO'),
         width: '10%',
       }, {
-        name: 'comprometido',
-        title: this.$t('MONTO COMP'),
+        name: 'EJECUTADO',
+        title: this.$t('EJECUTADO'),
         width: '10%',
       }, {
-        name: 'total_cuenta',
-        title: this.$t('SALDO'),
+        name: 'SUCURSAL',
+        title: this.$t('SUCURSAL'),
         width: '10%',
       }, {
         name: '__slot:actions',

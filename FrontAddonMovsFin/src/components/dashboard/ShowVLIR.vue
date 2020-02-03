@@ -21,17 +21,32 @@
         </div>
         <div class="flex xs12 lg12">
           <va-card>
-            <va-list-label>
-              {{ $t('Reporte') }}
-            </va-list-label>
+            <div align="left"  v-for="data of formData" :key="'item' + data.acctcode">
+              <div class="mb-4" style="padding-left: 25px">
+                <p class="display-2">Reporte de presupuesto</p><br>
+                <table>
+                  <tr>
+                    <td><p class="display-5" style="padding-right: 50px">{{'Nombre del proyecto: ' + data.proyecto_nombre}}</p></td>
+                    <td><p class="display-5" style="padding-left: 50px">{{'Código del proyecto: ' + data.PROYECTO_CODIGO}}</p></td>
+                  </tr>
+                  <br>
+                  <tr>
+                    <td><p class="display-5" style="padding-right: 50px">{{'Valido desde: ' + data.valido_desde}}</p></td>
+                    <td><p class="display-5" style="padding-left: 50px">{{'Valido hasta: ' + data.valido_hasta}}</p></td>
+                  </tr>
+                  <br>
+                  <tr>
+                    <td><p class="display-5" style="padding-right: 50px">{{'Unidad organizacional: ' + data.unidad_organizacional}}</p></td>
+                    <td><p class="display-5" style="padding-left: 50px">{{'PEI/PO: ' + data.pei_po}}</p></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
             <va-data-table
               :fields="fields"
               :data="items"
-              :loading="loading"
-              :totalPages="totalPages"
               :per-page="parseInt(perPage)"
-              @page-selected="readItems"
-              api-mode
+              :loading="loading"
             >
             </va-data-table>
           </va-card>
@@ -53,38 +68,42 @@ export default {
         name: 'cuenta',
         title: this.$t('cuenta'),
         width: '15%',
+        sortField: 'cuenta',
+        fontColor: '#ffffff',
+      }, {
+        name: 'nombre_cuenta',
+        title: this.$t('nombre cuenta'),
+        width: '20%',
       }, {
         name: 'fecha',
         title: this.$t('fecha'),
         width: '10%',
+        sortField: 'fecha',
       }, {
         name: 'numero_comprobante',
-        title: this.$t('numero de comprobante'),
-        width: '15%',
-      }, {
-        name: 'numero_transaccion',
-        title: this.$t('numero de transaccion'),
+        title: this.$t('# comprobante'),
         width: '10%',
       }, {
-        name: 'sucursal',
-        title: this.$t('sucursal'),
+        name: 'numero_transaccion',
+        title: this.$t('# transaccion'),
+        width: '10%',
+      }, {
+        name: 'linea_transaccion',
+        title: this.$t('# linea'),
+        width: '10%',
+      }, {
+        name: 'referencia',
+        title: this.$t('referencia'),
         width: '10%',
       }, {
         name: 'descripcion',
         title: this.$t('descripcion'),
-        width: '35%',
-      }, {
-        name: 'referencia',
-        title: this.$t('referencia'),
         width: '20%',
       }, {
-        name: 'monto',
-        title: this.$t('monto'),
-        width: '20%',
-      }, {
-        name: 'codigo_proyecto',
-        title: this.$t('codigo de proyecto'),
-        width: '20%',
+        name: 'monto_total',
+        title: this.$t('monto total'),
+        width: '10%',
+        sortField: 'monto_total',
       }]
     },
   },
@@ -101,40 +120,56 @@ export default {
       },
       columns: [
         {
-          label: 'Numero cuenta contable',
-          field: 'cuenta',
-        },
-        {
-          label: 'Fecha registro contable',
-          field: 'fecha',
-        },
-        {
-          label: 'No de comprobante contable',
-          field: 'numero_comprobante',
-        },
-        {
-          label: 'No de transaccion',
-          field: 'numero_transaccion',
-        },
-        {
-          label: 'Regional',
+          label: 'sucursal',
           field: 'sucursal',
         },
         {
-          label: 'Descripcion',
-          field: 'descripcion',
+          label: 'codigo_proyecto',
+          field: 'codigo_proyecto',
         },
         {
-          label: 'Referencia',
+          label: 'cuenta',
+          field: 'cuenta',
+        },
+        {
+          label: 'nombre_cuenta',
+          field: 'nombre_cuenta',
+        },
+        {
+          label: 'fecha',
+          field: 'fecha',
+        },
+        {
+          label: 'numero_comprobante',
+          field: 'numero_comprobante',
+        },
+        {
+          label: 'numero_transaccion',
+          field: 'numero_transaccion',
+        },
+        {
+          label: 'linea_transaccion',
+          field: 'linea_transaccion',
+        },
+        {
+          label: 'referencia',
           field: 'referencia',
         },
         {
-          label: 'Monto Bs',
-          field: 'monto',
+          label: 'descripcion',
+          field: 'descripcion',
         },
         {
-          label: 'Codigo de proyecto',
-          field: 'codigo_proyecto',
+          label: 'debe',
+          field: 'debe',
+        },
+        {
+          label: 'haber',
+          field: 'haber',
+        },
+        {
+          label: 'monto_total',
+          field: 'monto_total',
         },
       ],
     }
@@ -152,9 +187,22 @@ export default {
         this.isLoading = false
       }, 2000)
     },
+    init: function () {
+      this.isLoading = true
+      this.formData = this.$route.params
+      axios.get('/ProjectName/' + this.formData.id)
+        .then(response => {
+          this.formData = response.data
+        })
+        .catch()
+      setTimeout(() => {
+        this.isLoading = false
+      }, 2000)
+    },
   },
   created () {
     this.readItems()
+    this.init()
   },
 }
 </script>
