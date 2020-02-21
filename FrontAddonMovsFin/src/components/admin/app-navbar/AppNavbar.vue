@@ -1,11 +1,12 @@
 <template>
   <va-navbar class="app-navbar">
-    <div class="app-navbar__actions row flex-nowrap align--center">
+    <template>
+      <div align="left"><b><font color="#ff8c00">REPORTE DE PRESUPUESTACIÓN DE PROYECTOS</font></b></div>
+    </template>
+    <div class="app-navbar__actions row flex-nowrap align--right">
       <profile-dropdown class="va-navbar__item">
         <span>{{user}}</span>
       </profile-dropdown>
-      <!-- <font color="#ff8c00">{{user}}</font> -->
-      <!-- <div v-if="isLoggedIn" @click="logout"><font color="#ff8c00"> | logout</font></div> -->
     </div>
   </va-navbar>
 </template>

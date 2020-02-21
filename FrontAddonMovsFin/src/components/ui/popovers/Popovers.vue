@@ -35,7 +35,7 @@
               placement="right"
               open
             >
-              <va-button>
+              <va-button class="mb-12">
                 {{ $t('notificationsPage.popovers.showPopover') }}
               </va-button>
             </va-popover>

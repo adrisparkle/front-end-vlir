@@ -9,34 +9,37 @@
       <p>Seleccionar el proyecto a continuación:</p>
     </div>
     <form>
-      <div class="flex md6 offset--md3" >
+      <div class="flex xs6 offset--md3">
+        <va-select
+                :label="$t('Proyecto')"
+                v-model="simpleSelectModel"
+                textBy="nombre"
+                searchable
+                keyBy="codigo_proyecto"
+                :options="simpleOptions"
+                placeholder="Seleccione aqui"
+                formData = 1000
+                :value="codigo_proyecto">
+              </va-select>
         <va-input
           :label="$t('Regional')"
           v-model="simple"
           placeholder="Regional"
           readonly
+          size="60"
         />
-        <va-input
+        <va-date-picker
           :label="$t('Fecha desde')"
           v-model="date1"
-          readonly
+          :placeholder="date1"
+          disabled
         />
-        <va-input
+        <va-date-picker
           :label="$t('Fecha Hasta')"
           v-model="date2"
-          readonly
+          :placeholder="date2"
+          disabled
         />
-        <va-select
-          :label="$t('Proyecto')"
-          v-model="simpleSelectModel"
-          textBy="nombre"
-          searchable
-          keyBy="codigo_proyecto"
-          :options="simpleOptions"
-          placeholder="Seleccione aqui"
-          formData = 1000
-          :value="codigo_proyecto">
-        </va-select>
       </div>
       <div align="center">
         <!-- @click="readItems(selected)" -->
@@ -82,6 +85,17 @@ export default {
       color: 'danger',
       codigo_proyecto: '',
       isLoading: false,
+      fecha1: '',
+      fecha2: '',
+      popover: {
+        title: 'Escoger proyecto',
+        message: 'Debe empezar por elegir el proyecto',
+        icon: {
+          icon: 'fa fa-check',
+          text: 'print',
+        },
+        color: 'warning',
+      },
     }
   },
   created () {

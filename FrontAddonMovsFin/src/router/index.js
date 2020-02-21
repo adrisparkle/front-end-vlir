@@ -77,24 +77,8 @@ const router = new Router({
         },
         {
           name: 'showjournal',
-          path: 'showjournal/:id',
+          path: 'showjournal/:cuenta/:proyecto',
           component: () => import('../components/dashboard/JournalShow.vue'),
-          meta: {
-            requiresAuth: true,
-          },
-        },
-        {
-          name: 'reportevlir',
-          path: 'reportevlir',
-          component: () => import('../components/dashboard/SelectVLIR.vue'),
-          meta: {
-            requiresAuth: true,
-          },
-        },
-        {
-          name: 'mostrarVLIR',
-          path: 'mostrarVLIR/:id',
-          component: () => import('../components/dashboard/ShowVLIR.vue'),
           meta: {
             requiresAuth: true,
           },

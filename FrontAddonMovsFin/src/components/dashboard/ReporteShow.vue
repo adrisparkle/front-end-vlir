@@ -26,17 +26,21 @@
                 <table>
                   <tr>
                   <td><p class="display-5" style="padding-right: 50px">{{'Nombre del proyecto: ' + data.proyecto_nombre}}</p></td>
-                  <td><p class="display-5" style="padding-left: 50px">{{'Código del proyecto: ' + data.PROYECTO_CODIGO}}</p></td>
+                    <td><p class="display-5" style="padding-left: 50px">{{'Valido desde: ' + data.valido_desde}}</p></td>
                   </tr>
                   <br>
                   <tr>
-                    <td><p class="display-5" style="padding-right: 50px">{{'Valido desde: ' + data.valido_desde}}</p></td>
+                    <td><p class="display-5" style="padding-right: 50px">{{'Código del proyecto: ' + data.PROYECTO_CODIGO}}</p></td>
                     <td><p class="display-5" style="padding-left: 50px">{{'Valido hasta: ' + data.valido_hasta}}</p></td>
                   </tr>
                   <br>
                   <tr>
                     <td><p class="display-5" style="padding-right: 50px">{{'Unidad organizacional: ' + data.unidad_organizacional}}</p></td>
                     <td><p class="display-5" style="padding-left: 50px">{{'PEI/PO: ' + data.pei_po}}</p></td>
+                  </tr>
+                  <br>
+                  <tr>
+                    <td><p class="display-5" style="padding-right: 50px">{{'Regional: ' + data.regional}}</p></td>
                   </tr>
                 </table>
               </div>
@@ -48,8 +52,8 @@
               :loading="loading"
             >
               <template slot="actions" slot-scope="props">
-                <va-button flat small color="info" @click="journal(props.rowData.acctcode)" class="ma-0">
-                  {{ $t('tables.edit') }}
+                <va-button flat small color="info" @click="journal(props.rowData.ACCTCODE, props.rowData.PrjCode)" class="ma-0">
+                  {{ $t('Detalle') }}
                 </va-button>
               </template>
             </va-data-table>
@@ -176,10 +180,6 @@ export default {
         title: this.$t('EJECUTADO'),
         width: '10%',
       }, {
-        name: 'SUCURSAL',
-        title: this.$t('SUCURSAL'),
-        width: '10%',
-      }, {
         name: '__slot:actions',
         title: this.$t('tables.headings.acciones'),
         width: '10%',
@@ -197,7 +197,7 @@ export default {
         .catch()
       setTimeout(() => {
         this.isLoading = false
-      }, 2000)
+      }, 4000)
     },
     init: function () {
       this.isLoading = true
@@ -209,11 +209,23 @@ export default {
         .catch()
       setTimeout(() => {
         this.isLoading = false
-      }, 2000)
+      }, 4000)
     },
-    journal: function (id) {
-      console.log('hola we')
-      router.push('/admin/showjournal/' + id)
+    journal: function (cuenta, proyecto) {
+      console.log('hola we' + cuenta + ' y esta cosa' + proyecto)
+      router.push('/admin/showjournal/' + cuenta + '/' + proyecto)
+    },
+    readJournal: function (cuenta, proyecto) {
+      this.isLoading = true
+      this.items = this.$route.params
+      axios.get('/ProjectInfoDetail/' + cuenta + '/' + proyecto)
+        .then(response => {
+          this.items = response.data
+        })
+        .catch()
+      setTimeout(() => {
+        this.isLoading = false
+      }, 4000)
     },
   },
   created () {

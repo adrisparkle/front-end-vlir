@@ -88,7 +88,7 @@ export default {
 <style lang="scss">
 .auth-layout {
   min-height: 100vh;
-  background-image: linear-gradient(to right, #ffcb1a, #0e095d);
+  background-image: linear-gradient(to right, #8e6f0e, #091840);
  // background: #0e095d;
   &__card {
     width: 100%;
