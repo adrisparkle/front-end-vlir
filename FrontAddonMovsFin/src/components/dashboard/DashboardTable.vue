@@ -11,15 +11,6 @@
           <va-icon name="fa fa-search" slot="prepend"></va-icon>
         </va-input>
       </div>
-      <!--
-      <div class="flex xs12 md3">
-        <va-date-picker
-          :label="$t('Buscar por fecha')"
-          v-model="date"
-          :value="dateSearch"
-        />
-      </div>
-      -->
       <div class="flex xs12 md2 offset--md6">
         <va-select
           v-model="perPage"

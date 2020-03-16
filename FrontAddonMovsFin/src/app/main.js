@@ -44,14 +44,7 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-// Dev server
-// axios.defaults.baseURL = 'http://172.16.0.187:8001/api'
-// Production server
 axios.defaults.baseURL = 'http://localhost:8008/api'
-/* axios.defaults.baseURL = 'http://localhost:60749/api' */
-/* axios.defaults.headers.common['id'] = localStorage.getItem('userId') */
-/* axios.defaults.headers.common['token'] = localStorage.getItem('token') */
-/* eslint-disable no-new */
 Vue.prototype.$http = axios
 const token = localStorage.getItem('token')
 if (token) {

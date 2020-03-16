@@ -2,6 +2,12 @@ const path = require('path')
 
 let config
 
+module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/my-project/'
+    : '/',
+}
+
 if (process.env.VUE_APP_BOOK) {
   config = {
     lintOnSave: false,

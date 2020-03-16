@@ -30,16 +30,8 @@
                   </tr>
                   <br>
                   <tr>
-                    <td><p class="display-5" style="padding-right: 50px">{{'Primera fecha de registro: ' + data.fechaInicio}}</p></td>
-                    <td><p class="display-5" style="padding-left: 50px">{{'Ultima fecha de registro: ' + data.fechaFin}}</p></td>
-                  </tr>
-                  <br>
-                  <tr>
                     <td><p class="display-5" style="padding-right: 50px">{{'Cuenta: ' + data.cuenta}}</p></td>
                     <td><p class="display-5" style="padding-left: 50px">{{'Nombre de la cuenta: ' + data.nombre_cuenta}}</p></td>
-                  </tr>
-                  <tr>
-                    <td><p class="display-5" style="padding-right: 50px">{{'Unidad Organizacional: ' + data.uo}}</p></td>
                   </tr>
                 </table>
               </div>
@@ -147,7 +139,7 @@ export default {
     readItems: function () {
       this.isLoading = true
       this.items = this.$route.params
-      axios.get('/ProjectInfoDetail/' + this.items.cuenta + '/' + this.items.proyecto)
+      axios.get('/ProjectInfoDetail/' + this.items.cuenta + '/' + this.items.proyecto + '/' + this.items.initDate + '/' + this.items.endDate)
         .then(response => {
           this.items = response.data
         })

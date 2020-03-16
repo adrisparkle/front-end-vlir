@@ -69,7 +69,7 @@ const router = new Router({
         },
         {
           name: 'mostrarreporte',
-          path: 'mostrarreporte/:id',
+          path: 'mostrarreporte/:id/:initDate/:endDate',
           component: () => import('../components/dashboard/ReporteShow.vue'),
           meta: {
             requiresAuth: true,
@@ -77,11 +77,16 @@ const router = new Router({
         },
         {
           name: 'showjournal',
-          path: 'showjournal/:cuenta/:proyecto',
+          path: 'showjournal/:cuenta/:proyecto/:initDate/:endDate',
           component: () => import('../components/dashboard/JournalShow.vue'),
           meta: {
             requiresAuth: true,
           },
+        },
+        {
+          name: 'prueba',
+          path: 'prueba',
+          component: () => import('../components/dashboard/Prueba.vue'),
         },
         {
           name: 'forms',

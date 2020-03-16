@@ -32,18 +32,16 @@
           :label="$t('Fecha desde')"
           v-model="date1"
           :placeholder="date1"
-          disabled
         />
         <va-date-picker
           :label="$t('Fecha Hasta')"
           v-model="date2"
           :placeholder="date2"
-          disabled
         />
       </div>
       <div align="center">
         <!-- @click="readItems(selected)" -->
-        <va-button color="success" @click.prevent="check(simpleSelectModel.codigo_proyecto)"> {{ $t('Seleccionar') }}</va-button>
+        <va-button color="success" @click.prevent="check(simpleSelectModel.codigo_proyecto, date1, date2)"> {{ $t('Seleccionar') }}</va-button>
       </div>
     </form>
     <!-- @click="check(simpleSelectModel.codigo_proyecto)&&launchToast(formData.length,simpleSelectModel.codigo_proyecto)" -->
@@ -52,8 +50,6 @@
     <div v-if="(formData.length) === 0">{{launchToast()}}</div>
     -->
     <div align="center" hidden>
-      {{date1 = simpleSelectModel.valido_desde}} <br>
-      {{date2 = simpleSelectModel.valido_hasta}} <br>
       {{simple = simpleSelectModel.regional}} <br>
     </div>
   </va-card>
@@ -110,16 +106,16 @@ export default {
           this.isLoading = false
         }).catch()
     },
-    check: function (id) {
+    check: function (id, initDate, endDate) {
       this.isLoading = true
-      axios.get('/ProjectInfo/' + id)
+      axios.get('/ProjectInfo/' + id + '/' + initDate)
         .then(response => {
           this.formData = response.data
           console.log(response.data)
           if (response.data.length === 0) {
             this.launchToast()
           } else {
-            this.reporte(id)
+            this.reporte(id, initDate, endDate)
           }
         })
       setTimeout(() => {
@@ -136,8 +132,8 @@ export default {
         },
       )
     },
-    reporte: function (id) {
-      Router.push('/admin/mostrarreporte/' + id)
+    reporte: function (id, initDate, endDate) {
+      Router.push('/admin/mostrarreporte/' + id + '/' + initDate + '/' + endDate)
     },
   },
   computed: {

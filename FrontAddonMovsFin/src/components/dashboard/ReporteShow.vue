@@ -35,15 +35,17 @@
                   </tr>
                   <br>
                   <tr>
-                    <td><p class="display-5" style="padding-right: 50px">{{'Unidad organizacional: ' + data.unidad_organizacional}}</p></td>
-                    <td><p class="display-5" style="padding-left: 50px">{{'PEI/PO: ' + data.pei_po}}</p></td>
-                  </tr>
-                  <br>
-                  <tr>
                     <td><p class="display-5" style="padding-right: 50px">{{'Regional: ' + data.regional}}</p></td>
+                    <td><p class="display-5" style="padding-left: 50px">{{'PEI/PO: ' + data.pei_po}}</p></td>
                   </tr>
                 </table>
               </div>
+            </div>
+            <div class="flex xs12 md2 offset--md10">
+              <va-select
+                v-model="perPage"
+                :label="$t('tables.perPage')"
+                :options="perPageOptions"></va-select>
             </div>
             <va-data-table
               :fields="fields"
@@ -52,7 +54,7 @@
               :loading="loading"
             >
               <template slot="actions" slot-scope="props">
-                <va-button flat small color="info" @click="journal(props.rowData.ACCTCODE, props.rowData.PrjCode)" class="ma-0">
+                <va-button flat small color="info" @click="journal(props.rowData.ACCTCODE, props.rowData.PrjCode, fecha1, fecha2)" class="ma-0">
                   {{ $t('Detalle') }}
                 </va-button>
               </template>
@@ -76,11 +78,13 @@ export default {
   components: { VaButton, VaCollapse, VaAccordion, VaCard, Loading },
   data () {
     return {
+      fecha1: '',
+      fecha2: '',
       isLoading: false,
       fullPage: true,
       page: 1,
       perPage: '10',
-      perPageOptions: ['5', '10', '15', '20'],
+      perPageOptions: ['5', '10', '15', '20', '50', '100'],
       items: [],
       totalPages: 0,
       loading: false,
@@ -149,35 +153,19 @@ export default {
     fields () {
       return [{
         name: 'FORMATCODE',
-        title: this.$t('FORMATCODE'),
-        width: '10%',
-      }, {
-        name: 'ACCTCODE',
-        title: this.$t('ACCTCODE'),
+        title: this.$t('Cuenta'),
         width: '10%',
       }, {
         name: 'ACCTNAME',
-        title: this.$t('ACCTNAME'),
+        title: this.$t('Nombre de la cuenta'),
         width: '35%',
       }, {
-        name: 'TOTAL_CUENTA',
-        title: this.$t('TOTAL_CUENTA'),
-        width: '10%',
-      }, {
-        name: 'TOTAL_DIM',
-        title: this.$t('TOTAL_DIM'),
-        width: '10%',
-      }, {
         name: 'SOLICITADO',
-        title: this.$t('SOLICITADO'),
-        width: '10%',
-      }, {
-        name: 'COMPROMETIDO',
-        title: this.$t('COMPROMETIDO'),
+        title: this.$t('Presupuesto solicitado'),
         width: '10%',
       }, {
         name: 'EJECUTADO',
-        title: this.$t('EJECUTADO'),
+        title: this.$t('Presupuesto Ejecutado'),
         width: '10%',
       }, {
         name: '__slot:actions',
@@ -190,7 +178,9 @@ export default {
     readItems: function () {
       this.isLoading = true
       this.items = this.$route.params
-      axios.get('/ProjectInfo/' + this.items.id)
+      this.fecha1 = this.items.initDate
+      this.fecha2 = this.items.endDate
+      axios.get('/ProjectInfo/' + this.items.id + '/' + this.items.initDate)
         .then(response => {
           this.items = response.data
         })
@@ -211,21 +201,9 @@ export default {
         this.isLoading = false
       }, 4000)
     },
-    journal: function (cuenta, proyecto) {
-      console.log('hola we' + cuenta + ' y esta cosa' + proyecto)
-      router.push('/admin/showjournal/' + cuenta + '/' + proyecto)
-    },
-    readJournal: function (cuenta, proyecto) {
-      this.isLoading = true
-      this.items = this.$route.params
-      axios.get('/ProjectInfoDetail/' + cuenta + '/' + proyecto)
-        .then(response => {
-          this.items = response.data
-        })
-        .catch()
-      setTimeout(() => {
-        this.isLoading = false
-      }, 4000)
+    journal: function (cuenta, proyecto, initDate, endDate) {
+      console.log('/admin/showjournal/' + cuenta + '/' + proyecto + '/' + initDate + '/' + endDate)
+      router.push('/admin/showjournal/' + cuenta + '/' + proyecto + '/' + initDate + '/' + endDate)
     },
   },
   created () {
